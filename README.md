@@ -25,11 +25,13 @@ pip install yt-dlp         # Python
 
 ## Install
 
+**From GitHub (recommended):**
+
 ```bash
-bun install -g spoti-bye
+bun install -g github:alexknowshtml/spoti-bye
 ```
 
-Or clone and run locally:
+**Or clone and run locally:**
 
 ```bash
 git clone https://github.com/alexknowshtml/spoti-bye
