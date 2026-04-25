@@ -1,0 +1,29 @@
+{
+  "name": "spoti-bye",
+  "version": "0.1.0",
+  "description": "Export your Spotify library to a local SQLite database and resolve YouTube video IDs — no API quota required",
+  "type": "module",
+  "bin": {
+    "spoti-bye": "./src/cli.ts"
+  },
+  "scripts": {
+    "start": "bun src/cli.ts"
+  },
+  "keywords": [
+    "spotify",
+    "youtube",
+    "playlist",
+    "exportify",
+    "sqlite",
+    "yt-dlp",
+    "music"
+  ],
+  "author": "alexknowshtml",
+  "license": "MIT",
+  "dependencies": {
+    "googleapis": "^144.0.0"
+  },
+  "engines": {
+    "bun": ">=1.0.0"
+  }
+}

@@ -1,0 +1,7 @@
+node_modules/
+.env
+*.db
+*.db-wal
+*.db-shm
+youtube-review-*.json
+~/.spoti-bye-youtube-token
