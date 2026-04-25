@@ -175,6 +175,62 @@ The `skills/` directory contains drop-in Claude Code skill files for:
 
 Copy the `skills/` folder into your Claude Code project's `.claude/skills/` directory.
 
+## Testing with the Sample Playlist
+
+The `samples/` directory includes a real Exportify CSV (`1999_Radio_Bangers.csv`) you can use to test the full pipeline without needing your own Spotify export.
+
+### Option A: Run locally
+
+```bash
+git clone https://github.com/alexknowshtml/spoti-bye
+cd spoti-bye
+bun install
+
+# Import the sample
+bun src/cli.ts import --name="1999 Radio Bangers" --from-csv=samples/1999_Radio_Bangers.csv
+
+# Verify it landed
+bun src/cli.ts list
+
+# Resolve YouTube IDs (requires yt-dlp)
+bun src/cli.ts resolve --playlist=1 --threshold=3
+
+# Process any flagged tracks
+bun src/cli.ts review
+```
+
+### Option B: Run in a container (no local dependencies needed)
+
+Requires [Podman](https://podman.io) or Docker.
+
+```bash
+# Build the image (includes Bun + yt-dlp)
+podman build -t spoti-bye .
+
+# Import the sample
+podman run --rm \
+  -v ~/.spoti-bye:/root/.spoti-bye \
+  -v $(pwd)/samples/1999_Radio_Bangers.csv:/playlist.csv \
+  spoti-bye import --name="1999 Radio Bangers" --from-csv=/playlist.csv
+
+# Resolve YouTube IDs
+podman run --rm \
+  -v ~/.spoti-bye:/root/.spoti-bye \
+  spoti-bye resolve --playlist=1 --threshold=3
+
+# Process flagged tracks
+podman run --rm \
+  -v ~/.spoti-bye:/root/.spoti-bye \
+  spoti-bye review
+
+# List results
+podman run --rm \
+  -v ~/.spoti-bye:/root/.spoti-bye \
+  spoti-bye list
+```
+
+Expected results on the sample: 23/24 tracks auto-resolved, 1 flagged (multi-artist metadata edge case) and accepted via review.
+
 ## License
 
 MIT
