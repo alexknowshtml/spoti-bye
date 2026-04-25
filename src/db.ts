@@ -13,7 +13,7 @@
  */
 
 import { Database } from 'bun:sqlite';
-import { join } from 'node:path';
+import { join, dirname } from 'node:path';
 import { homedir } from 'node:os';
 import { mkdirSync } from 'node:fs';
 
@@ -131,7 +131,7 @@ export interface TrackInsert {
 export function getDb(): Database {
   if (db) return db;
 
-  mkdirSync(DB_PATH === DEFAULT_DB_PATH ? DEFAULT_DB_DIR : require('node:path').dirname(DB_PATH), { recursive: true });
+  mkdirSync(DB_PATH === DEFAULT_DB_PATH ? DEFAULT_DB_DIR : dirname(DB_PATH), { recursive: true });
 
   db = new Database(DB_PATH);
   db.exec('PRAGMA journal_mode = WAL');
